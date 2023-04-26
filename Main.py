@@ -68,10 +68,12 @@ functions = np.array([[QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
 print("-" * 50)
 for sorter in functions:
     average_time = test_timing(test, sorter[0], 10)
-    sortedArray, comparisons, changes = sorter[1](test)
+    sortedArray, comparisons, swaps = sorter[1](test)
+
+    # Verificar se a quantidade de comparações e trocas está sendo calculada corretamente
 
     print(f"{sorter[0].__name__}:\
-          \nMade {comparisons} comparisons and {changes} changes;\
+          \nMade {comparisons} comparisons and {swaps} swaps;\
           \nAverage time: {average_time:.6f}\
           \nSorted array:\n{sortedArray}")
     print("-" * 50)

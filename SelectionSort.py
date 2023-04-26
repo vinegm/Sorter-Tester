@@ -14,7 +14,7 @@ def selectionSort(arr):
 
 def selectionSort_counting(arr):
     comparisons = 0
-    changes = 0
+    swaps = 0
     for i in range(len(arr)):  # Itera sobre o array
         # Define o índice do elemento mínimo como o índice atual da iteração
         min_index = i
@@ -26,5 +26,5 @@ def selectionSort_counting(arr):
             comparisons += 1
         # Troca o elemento atual pelo elemento mínimo
         arr[i], arr[min_index] = arr[min_index], arr[i]
-        changes += 1
-    return arr, comparisons, changes  # Retorna o array ordenado
+        swaps += 1
+    return arr, comparisons, swaps  # Retorna o array ordenado
