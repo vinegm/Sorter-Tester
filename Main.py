@@ -47,7 +47,7 @@ def test_timing(array, sorter, amount_of_tests):
         test_array = np.copy(array)
 
         startTimer = timeit.default_timer()
-        QuickSort.quick_sort_for_timing(test_array, 0, len(test_array)-1)  # Sorter, por enquanto só funciona um
+        sorter(test_array)  # QuickSort.quick_sort_for_timing(test_array, 0, len(test_array)-1)  # Sorter, por enquanto só funciona um
         stopTimer = timeit.default_timer()
 
         test_times = np.append(test_times, (stopTimer - startTimer))
@@ -61,8 +61,17 @@ def test_timing(array, sorter, amount_of_tests):
 test_cases = TestCases.test_cases()
 test = test_cases[7]
 
-average_time = test_timing(test, None, 250)
+#average_time = test_timing(test, None, 250)
+functions = np.array([[QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
+                      [SelectionSort.selectionSort, SelectionSort.selectionSort_counting]])
 
 print("-" * 50)
-print(f"QuickSort Average Time: {average_time:.6f}")
-print("-" * 50)
+for sorter in functions:
+    average_time = test_timing(test, sorter[0], 10)
+    sortedArray, comparisons, changes = sorter[1](test)
+
+    print(f"{sorter[0].__name__}:\
+          \nMade {comparisons} comparisons and {changes} changes;\
+          \nAverage time: {average_time:.6f}\
+          \nSorted array:\n{sortedArray}")
+    print("-" * 50)

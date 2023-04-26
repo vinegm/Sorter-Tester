@@ -1,5 +1,9 @@
 # Utilizar estas funcões para calcular tempo para organizar
 
+def quick_sort(array):
+  sortedArray = quick_sorter_for_timing(array, 0, len(array)-1)
+  return sortedArray
+
 def particao_for_timing(array, first, last):
   # Utiliza o primeiro item do array como pivo
   pivot = array[first]
@@ -31,20 +35,26 @@ def particao_for_timing(array, first, last):
   return high
 
 
-def quick_sort_for_timing(array, first, last):
+def quick_sorter_for_timing(array, first, last):
   # Continua ordenando a lista enquanto o ponteiro passado para a função não se encontrarem
   if first < last:
     # Procura o local para dividir e organizar a lista
     split= particao_for_timing(array, first, last)
     
     # Divide a lista em duas partes para organizar seus elementos
-    quick_sort_for_timing(array, first, split - 1)
-    quick_sort_for_timing(array, split + 1, last)
+    quick_sorter_for_timing(array, first, split - 1)
+    quick_sorter_for_timing(array, split + 1, last)
 
   return array
 
 
 # Utilizar estas funcões para calcular quantidade de comparações e mudanças
+
+def quick_sort_for_counting(array):
+  comparisons = 0
+  changes = 0
+  sortedArray, comparisons, changes = quick_sorter_for_counting(array, 0, len(array)-1, comparisons, changes)
+  return sortedArray, comparisons, changes
 
 def particao_for_counting(array, first, last, comparisons, changes):
   # Utiliza o primeiro item do array como pivo
@@ -81,15 +91,15 @@ def particao_for_counting(array, first, last, comparisons, changes):
   return high, comparisons, changes
 
 
-def quick_sort_for_counting(array, first, last, comparisons, changes):
+def quick_sorter_for_counting(array, first, last, comparisons, changes):
   # Continua ordenando a lista enquanto o ponteiro passado para a função não se encontrarem
   if first < last:
     # Procura o local para dividir e organizar a lista
     split, comparisons, changes = particao_for_counting(array, first, last, comparisons, changes)
     
     # Divide a lista em duas partes para organizar seus elementos
-    split_left = quick_sort_for_counting(array, first, split - 1, comparisons, changes)
-    split_right = quick_sort_for_counting(array, split + 1, last, comparisons, changes)
+    split_left = quick_sorter_for_counting(array, first, split - 1, comparisons, changes)
+    split_right = quick_sorter_for_counting(array, split + 1, last, comparisons, changes)
 
     # Soma as mudanças e comparações antes de retornar o valor
     comparisons += split_left[1] + split_right[1]
