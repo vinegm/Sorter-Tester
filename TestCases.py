@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import random as rd
 
-
+# ESCREVER MELHORES TESTES!!!!!!!!!!!!!!!!!!!!!!!!!
 def test_cases():
     # Para testar: Lista de números em ordem aleatória.
     vetor1 = np.array([8, 5, 1, 7, 9, 4, 10, 3, 6, 2])
