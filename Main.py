@@ -64,26 +64,34 @@ def test_timing(array, sorter, amount_of_tests):
 
 
 def test_sorter(test_case, sorter, amout_of_tests):
+    """Tests a given sorter
+    
+    Parameters:
+    test_case (array): Test that will be run
+    sorter (array): Sorter that will be tested
+    amount_of_tests (int): How many tests will be made to get a average time for sorting
+
+    Returns:
+    average_time: Average time of the sorter to complete the task on the given test
+    comparisons: How many comparisons the sorter made
+    swaps: How many comparisons the sorter swaps
+    """    
     average_time = test_timing(test_case, sorter[0], amout_of_tests)
     sortedArray, comparisons, swaps = sorter[1](test)
-    # print(f"{sorter[0].__name__}:\
-    #         \nMade {comparisons} comparisons and {swaps} swaps;\
-    #         \nAverage time: {average_time:.6f}\
-    #         \nSorted array:\n{sortedArray}")
     return average_time, comparisons, swaps
 
 
 sorters = np.array([[QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
                     [SelectionSort.selectionSort, SelectionSort.selectionSort_counting]])
 
-test_cases = TestCases.test_cases()
-amount_of_tests = 1
+test_cases = TestCases.test_cases()  # Gets the test cases
+amount_of_tests = 1  # Sets the amount of tests to be made on each case
 
 data = {"sorter": [],
         "average time": [],
         "comparisons": [],
         "swaps": []}
-case = [copy.deepcopy(data) for i in range(len(test_cases))]
+cases = [copy.deepcopy(data) for _ in range(len(test_cases))]
 
 
 for i, test in enumerate(test_cases):
@@ -91,32 +99,35 @@ for i, test in enumerate(test_cases):
 
         average_time, comparisons, swaps = test_sorter(test, sorter, amount_of_tests)
         
-        case[i]["sorter"].append(sorter[0].__name__)
-        case[i]["average time"].append(average_time)
-        case[i]["comparisons"].append(comparisons)
-        case[i]["swaps"].append(swaps)
+        cases[i]["sorter"].append(sorter[0].__name__)
+        cases[i]["average time"].append(average_time)
+        cases[i]["comparisons"].append(comparisons)
+        cases[i]["swaps"].append(swaps)
+
+    cases[i] = pd.DataFrame(cases[i])
+
 
 
 print("-" * 50)
-for i in range(len(case)):
-    print(f"Case{i+1}:")
-
-    for key, value in case[i].items():
-        print(key, value)
-
+for i in range(len(cases)):
+    print(f"Case{i+1}:\
+          \n{cases[i]}")
     print("-" * 50)
 
+    # for key, value in case.items():
+    #     print(key, value)
 
 
-df = pd.DataFrame(case[7])
+# for i in range(len(cases)):
+#     df = pd.DataFrame(cases[7])
 
-# Create a bar chart
-ax = df.plot(x='sorter', y=['comparisons', 'swaps'], kind='bar', figsize=(8, 6))
+# # Create a bar chart
+# ax = df.plot(x='sorter', y=['comparisons', 'swaps'], kind='bar', figsize=(8, 6))
 
-# Add labels and title
-ax.set_xlabel("Sorters")
-ax.set_ylabel("Comparisons / Swaps")
-ax.set_title("Comparison of Sorters:")
+# # Add labels and title
+# ax.set_xlabel("Sorters")
+# ax.set_ylabel("Comparisons / Swaps")
+# ax.set_title("Comparison of Sorters:")
 
-# Display the chart
-plt.show()
+# # Display the chart
+# plt.show()
