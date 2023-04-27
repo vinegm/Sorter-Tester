@@ -58,22 +58,25 @@ def test_timing(array, sorter, amount_of_tests):
 
     return average_time
 
-test_cases = TestCases.test_cases()
-test = test_cases[7]
+def test_sorter(test_case, sorter, amout_of_tests):
+    average_time = test_timing(test_case, sorter[0], amout_of_tests)
+    sortedArray, comparisons, swaps = sorter[1](test)
+    print(f"{sorter[0].__name__}:\
+            \nMade {comparisons} comparisons and {swaps} swaps;\
+            \nAverage time: {average_time:.6f}\
+            \nSorted array:\n{sortedArray}")
+    return 
 
-#average_time = test_timing(test, None, 250)
-functions = np.array([[QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
-                      [SelectionSort.selectionSort, SelectionSort.selectionSort_counting]])
+sorters = np.array([[QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
+                    [SelectionSort.selectionSort, SelectionSort.selectionSort_counting]])
+
+test_cases = TestCases.test_cases()
+amount_of_tests = 250
 
 print("-" * 50)
-for sorter in functions:
-    average_time = test_timing(test, sorter[0], 10)
-    sortedArray, comparisons, swaps = sorter[1](test)
-
-    # Verificar se a quantidade de comparações e trocas está sendo calculada corretamente
-
-    print(f"{sorter[0].__name__}:\
-          \nMade {comparisons} comparisons and {swaps} swaps;\
-          \nAverage time: {average_time:.6f}\
-          \nSorted array:\n{sortedArray}")
+for i, test in enumerate(test_cases):
+    print(f"Vetor{i+1}: {test}")
     print("-" * 50)
+    for sorter in sorters:
+        test_sorter(test, sorter, amount_of_tests)
+        print("-" * 50)

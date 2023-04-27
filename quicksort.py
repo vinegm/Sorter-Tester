@@ -56,9 +56,12 @@ def quick_sort_for_counting(array):
   sortedArray, comparisons, swaps = quick_sorter_for_counting(array, 0, len(array)-1, comparisons, swaps)
   return sortedArray, comparisons, swaps
 
-def particao_for_counting(array, first, last, comparisons, swaps):
+def particao_for_counting(array, first, last):
   # Utiliza o primeiro item do array como pivo
   pivot = array[first]
+
+  comparisons = 0
+  swaps = 0
 
   # Utiliza o segundo item da lista como ponteiro menor, e ultimo item da lista como maior ponteiro
   low = first + 1
@@ -95,7 +98,7 @@ def quick_sorter_for_counting(array, first, last, comparisons, swaps):
   # Continua ordenando a lista enquanto o ponteiro passado para a função não se encontrarem
   if first < last:
     # Procura o local para dividir e organizar a lista
-    split, comparisons, swaps = particao_for_counting(array, first, last, comparisons, swaps)
+    split, comparisons, swaps = particao_for_counting(array, first, last)
     
     # Divide a lista em duas partes para organizar seus elementos
     split_left = quick_sorter_for_counting(array, first, split - 1, comparisons, swaps)
