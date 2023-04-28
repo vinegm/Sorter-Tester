@@ -101,9 +101,12 @@ data = {"sorter": [],
         "swaps": []}
 cases = [copy.deepcopy(data) for _ in range(len(test_cases))]
 
-
+print("-" * 25)
 for i, test in enumerate(test_cases):
+    print(f"\tCase{i+1}:")
     for sorter in sorters:
+
+        print(f"Testing {sorter[0].__name__}...")
 
         average_time, comparisons, swaps = test_sorter(test, sorter, amount_of_tests)
         
@@ -113,6 +116,7 @@ for i, test in enumerate(test_cases):
         cases[i]["swaps"].append(swaps)
 
     cases[i] = pd.DataFrame(cases[i])
+    print("-" * 25)
 
 # Prints the data frames of each case to the termial
 print("-" * 50)

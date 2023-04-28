@@ -1,31 +1,41 @@
 import numpy as np
 from numpy import random as rd
+import random
 
 # ESCREVER MELHORES TESTES!!!!!!!!!!!!!!!!!!!!!!!!!
 def test_cases():
     # Para testar: Lista de números em ordem aleatória.
-    vetor1 = np.array([8, 5, 1, 7, 9, 4, 10, 3, 6, 2])
+    numbers = list(range(1, 101))
+    random.shuffle(numbers)
+    cenario1 = numbers[:1000]
 
     # Para testar: Uma lista que já está ordenada.
-    vetor2 = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    cenario2 = list(range(1, 101))
 
     # Para testar: Uma lista classificada em ordem decrescente.
-    vetor3 = np.array([10, 9, 8, 7, 6, 5, 4, 3, 2, 1])
+    cenario3 = list(range(1, 101))
+    cenario3.reverse()
 
     # Para testar: Uma lista contendo elementos repetidos.
-    vetor4 = np.array([8, 5, 1, 7, 9, 4, 10, 3, 6, 2, 8, 5, 1])
+    cenario4 = list(range(1, 101))
+    repeated_numbers = random.sample(numbers, 50)
+    cenario4 = np.append(cenario4, repeated_numbers)
+    random.shuffle(cenario4)
 
     # Para testar: Uma lista vazia.
-    vetor5 = np.array([])
+    cenario5 = np.array([])
 
     # Para testar: Uma lista contendo apenas um elemento.
-    vetor6 = np.array([5])
+    cenario6 = np.array([5])
 
     # Para testar: Uma lista contendo um elemento repetido muitas vezes.
-    vetor7 = np.array([6, 9, 6, 7, 6, 5, 6, 6, 2, 6])
+    cenario7 = list(range(1, 51))
+    repeated_number = random.randint(1, 50)
+    cenario7 = np.append(cenario7, ([repeated_number]*50))
+    random.shuffle(cenario7)
 
     # Para testar: Uma lista longa.
-    vetor8 = rd.randint(0, 1000, 100)
+    cenario8 = rd.randint(0, 10_000, 1_000)
 
-    testCases = [vetor1, vetor2, vetor3, vetor4, vetor5, vetor6, vetor7, vetor8]
+    testCases = [cenario1, cenario2, cenario3, cenario4, cenario5, cenario6, cenario7, cenario8]
     return testCases
