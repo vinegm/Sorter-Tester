@@ -1,4 +1,6 @@
-def ordenar_por_indexacao(lista):
+def index_sort(lista):
+    if len(lista) < 1:
+        return lista
     # determina o valor máximo e mínimo da lista
     valor_maximo = max(lista)
     valor_minimo = min(lista)

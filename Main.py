@@ -77,12 +77,17 @@ def test_sorter(test_case, sorter, amout_of_tests):
     swaps: How many comparisons the sorter swaps
     """    
     average_time = test_timing(test_case, sorter[0], amout_of_tests)
-    sortedArray, comparisons, swaps = sorter[1](test)
+    if sorter[1] != None:
+        sortedArray, comparisons, swaps = sorter[1](test)
+    else:
+        comparisons = 0
+        swaps = 0
     return average_time, comparisons, swaps
 
 
 sorters = np.array([[QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
-                    [SelectionSort.selectionSort, SelectionSort.selectionSort_counting]])
+                    [SelectionSort.selectionSort, SelectionSort.selectionSort_counting],
+                    [RadixSort.index_sort, None]])
 
 test_cases = TestCases.test_cases()  # Gets the test cases
 amount_of_tests = 1  # Sets the amount of tests to be made on each case
