@@ -6,6 +6,7 @@ import timeit
 import os
 
 import TestCases
+import BubbleSort
 import InsertionSort
 import SelectionSort
 import MergeSort
@@ -85,12 +86,13 @@ def test_sorter(test_case, sorter, amout_of_tests):
     return average_time, comparisons, swaps
 
 
-sorters = np.array([[QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
+sorters = np.array([[BubbleSort.bubble2_sort, BubbleSort.bubble2_sort_counting],
+                    [QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
                     [SelectionSort.selectionSort, SelectionSort.selectionSort_counting],
                     [RadixSort.index_sort, None]])
 
 test_cases = TestCases.test_cases()  # Gets the test cases
-amount_of_tests = 1  # Sets the amount of tests to be made on each case
+amount_of_tests = 250  # Sets the amount of tests to be made on each case
 
 data = {"sorter": [],
         "average time": [],
