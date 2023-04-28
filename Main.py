@@ -21,14 +21,14 @@ def calculate_average_time(array_of_times):
     array_of_times (np.array): Array containing the samples
 
     Returns:
-    average_time: Time in average the algorithm took (up to 6 decimals, a microsecond)
+    average_time: Time in average the algorithm took in microseconds
     """
     sum_of_times = 0
 
     for i in range(array_of_times.size):
         sum_of_times += array_of_times[i]
 
-    average_time = "{:.6f}".format(sum_of_times / array_of_times.size)
+    average_time = int((sum_of_times / array_of_times.size)*1000000)
 
     return average_time
 
@@ -51,7 +51,7 @@ def test_timing(array, sorter, amount_of_tests):
         test_array = np.copy(array)
 
         startTimer = timeit.default_timer()
-        sorter(test_array)  # QuickSort.quick_sort_for_timing(test_array, 0, len(test_array)-1)  # Sorter, por enquanto só funciona um
+        sorter(test_array)
         stopTimer = timeit.default_timer()
 
         test_times = np.append(test_times, (stopTimer - startTimer))
@@ -114,20 +114,21 @@ for i in range(len(cases)):
           \n{cases[i]}")
     print("-" * 50)
 
-    # for key, value in case.items():
-    #     print(key, value)
 
+for i, case in enumerate(cases):
+    fig, axs = plt.subplots(3, 1, figsize=(10, 10))
+    
+    axs[0].bar(0, case["average time"], color = "y")
+    axs[0].set_title(f"Case Test {i+1}")
+    axs[0].set_ylabel("Time (microseconds)")
+    
+    axs[1].bar(case["sorter"], case["comparisons"], color = "b")
+    axs[1].set_ylabel("Quantity of Comparisons")
 
-# for i in range(len(cases)):
-#     df = pd.DataFrame(cases[7])
+    axs[2].bar(case["sorter"], case["swaps"], color = "g")
+    axs[2].set_xlabel("Sorter")
+    axs[2].set_ylabel("Quantity of Swaps")
+    
+    plt.tight_layout()
 
-# # Create a bar chart
-# ax = df.plot(x='sorter', y=['comparisons', 'swaps'], kind='bar', figsize=(8, 6))
-
-# # Add labels and title
-# ax.set_xlabel("Sorters")
-# ax.set_ylabel("Comparisons / Swaps")
-# ax.set_title("Comparison of Sorters:")
-
-# # Display the chart
-# plt.show()
+plt.show()
