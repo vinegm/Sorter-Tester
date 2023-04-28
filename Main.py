@@ -87,6 +87,7 @@ def test_sorter(test_case, sorter, amout_of_tests):
 
 
 sorters = np.array([[BubbleSort.bubble2_sort, BubbleSort.bubble2_sort_counting],
+                    [InsertionSort.insert_sort, InsertionSort.insert_sort_otimizado_counting],
                     [QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
                     [SelectionSort.selectionSort, SelectionSort.selectionSort_counting],
                     [RadixSort.index_sort, None]])

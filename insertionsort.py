@@ -1,15 +1,38 @@
-from bisect import bisect_left
+def insert_sort(vetor):
+  #comparacoes, atribuicoes = 0 , 0                       # VARIAVEIS PARA ATRIBUIR AS COMPARAÇÕES E ATRIBUIÇÕES
+
+  for p in range(len(vetor)):                            # FOR PARA PERCORRER O VETOR
+    elemento_atual = vetor[p]
+
+    #if p > 0:                                           # VERIFICA SE O P É MAIOR QUE 0
+      #comparacoes +=1                                   # INCREMENTA O CONTADOR DAS COMPARAÇÕES EM 1
+
+    while p > 0  and vetor[p - 1] > elemento_atual:     # A OTIMIZAÇÃO FICA NESSA PARTE AQUI, CASO O VALOR DA POSIÇÃO ANTERIOR SEJA MENOR, ELE NÃO FAZ MAIS A COMPARAÇÃO POIS TEORICAMENTE O RESTANTE JÁ ESTA ORDENADO.
+      vetor[p] = vetor[p - 1]                           # A POSIÇÃO ATUAL DO VETOR RECEBE O VALOR DA POSIÇÃO ANTERIOR
+      atribuicoes += 1                                  # INCREMENTA O CONTADOR DAS ATRIBUIÇÕES EM 1
+      p -= 1                                            # DECREMENTA A VARIAVEL DE CONTROLE DO FOR
+
+    vetor[p] = elemento_atual                           # VETOR NA POSIÇÃO P RECEBE VALOR DA VARIAVEL ELEMENTO_ATUAL
+    #atribuicoes += 1                                    # INCREMENTA O CONTADOR DAS ATRIBUIÇÕES EM 1
+  
+  return vetor                                         # **IMPRIMI** Retorna O VETOR ORDENADO
 
 
-def insertion_sort(vetor):
-  for i in range(1, len(vetor)):
-    chave = vetor[i]
-    # bisect_left eh uma funcao built-in python
-    # que retorna o index onde o valor CHAVE
-    # deve ser inserido no vetor de forma que a ordem seja mantida 
-    j = bisect_left(vetor, chave, 0, i)
-    # Empurramos o restante do vetor para a direita e inserimos o valor
-    # CHAVE na posicao correta
-    vetor[j+1:i+1] = vetor[j:i]
-    vetor[j] = chave
-  return vetor
+def insert_sort_otimizado_counting(vetor):
+  comparisons, swaps = 0 , 0                       # VARIAVEIS PARA ATRIBUIR AS COMPARAÇÕES E ATRIBUIÇÕES
+
+  for p in range(len(vetor)):                            # FOR PARA PERCORRER O VETOR
+    elemento_atual = vetor[p]
+
+    if p > 0:                                           # VERIFICA SE O P É MAIOR QUE 0
+      comparisons +=1                                   # INCREMENTA O CONTADOR DAS COMPARAÇÕES EM 1
+
+    while p > 0  and vetor[p - 1] > elemento_atual:     # A OTIMIZAÇÃO FICA NESSA PARTE AQUI, CASO O VALOR DA POSIÇÃO ANTERIOR SEJA MENOR, ELE NÃO FAZ MAIS A COMPARAÇÃO POIS TEORICAMENTE O RESTANTE JÁ ESTA ORDENADO.
+      vetor[p] = vetor[p - 1]                           # A POSIÇÃO ATUAL DO VETOR RECEBE O VALOR DA POSIÇÃO ANTERIOR
+      swaps += 1                                  # INCREMENTA O CONTADOR DAS ATRIBUIÇÕES EM 1
+      p -= 1                                            # DECREMENTA A VARIAVEL DE CONTROLE DO FOR
+
+    vetor[p] = elemento_atual                           # VETOR NA POSIÇÃO P RECEBE VALOR DA VARIAVEL ELEMENTO_ATUAL
+    swaps += 1                                    # INCREMENTA O CONTADOR DAS ATRIBUIÇÕES EM 1
+  
+  return vetor, comparisons, swaps
