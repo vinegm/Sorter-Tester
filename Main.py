@@ -106,19 +106,18 @@ for i, test in enumerate(test_cases):
 
     cases[i] = pd.DataFrame(cases[i])
 
-
-
+# Prints the data frames of each case to the termial
 print("-" * 50)
 for i in range(len(cases)):
     print(f"Case{i+1}:\
           \n{cases[i]}")
     print("-" * 50)
 
-
+# Opens a window for each test case with their info
 for i, case in enumerate(cases):
     fig, axs = plt.subplots(3, 1, figsize=(10, 10))
     
-    axs[0].bar(0, case["average time"], color = "y")
+    axs[0].bar(case["sorter"], case["average time"], color = "y")
     axs[0].set_title(f"Case Test {i+1}")
     axs[0].set_ylabel("Time (microseconds)")
     
