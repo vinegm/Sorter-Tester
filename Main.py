@@ -6,15 +6,7 @@ import timeit
 import os
 
 import TestCases
-import BubbleSort
-import InsertionSort
-import SelectionSort
-import MergeSort
-import QuickSort
-import RadixSort
-import ShellSort
-import TreeSort
-
+from Sorters import Sorters
 
 def calculate_average_time(array_of_times):
     """Takes a array with times samples and calculates the average of them
@@ -87,17 +79,17 @@ def test_sorter(test_case, sorter, amout_of_tests):
     return average_time, comparisons, swaps
 
 
-sorters = np.array([[BubbleSort.bubble2_sort, BubbleSort.bubble2_sort_counting],
-                    [InsertionSort.insert_sort, InsertionSort.insert_sort_otimizado_counting],
-                    [QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
-                    [MergeSort.merge_sort, MergeSort.merge_sort_counting],
-                    [ShellSort.shellSort, ShellSort.shellSort_counting],
-                    [SelectionSort.selectionSort, SelectionSort.selectionSort_counting],
-                    [RadixSort.index_sort, None],
-                    [TreeSort.tree_sort, TreeSort.tree_sort_counting]])
+sorters = np.array([[Sorters.BubbleSort.bubble2_sort, Sorters.BubbleSort.bubble2_sort_counting],
+                    [Sorters.InsertionSort.insert_sort, Sorters.InsertionSort.insert_sort_otimizado_counting],
+                    [Sorters.QuickSort.quick_sort, Sorters.QuickSort.quick_sort_for_counting],
+                    [Sorters.MergeSort.merge_sort, Sorters.MergeSort.merge_sort_counting],
+                    [Sorters.ShellSort.shellSort, Sorters.ShellSort.shellSort_counting],
+                    [Sorters.SelectionSort.selectionSort, Sorters.SelectionSort.selectionSort_counting],
+                    [Sorters.RadixSort.index_sort, None],
+                    [Sorters.TreeSort.tree_sort, Sorters.TreeSort.tree_sort_counting]])
 
 test_cases = TestCases.test_cases()  # Gets the test cases
-amount_of_tests = 250  # Sets the amount of tests to be made on each case
+amount_of_tests = 10  # Sets the amount of tests to be made on each case
 
 data = {"sorter": [],
         "average time": [],
@@ -106,13 +98,13 @@ data = {"sorter": [],
 cases = [copy.deepcopy(data) for _ in range(len(test_cases))]
 
 print("-" * 25)
-for i, test in enumerate(test_cases):
+for i, Sorters in enumerate(test_cases):
     print(f"\tCase{i+1}:")
     for sorter in sorters:
 
         print(f"Testing {sorter[0].__name__}...")
 
-        average_time, comparisons, swaps = test_sorter(test, sorter, amount_of_tests)
+        average_time, comparisons, swaps = test_sorter(Sorters, sorter, amount_of_tests)
         
         cases[i]["sorter"].append(sorter[0].__name__)
         cases[i]["average time"].append(average_time)
@@ -131,7 +123,7 @@ for i in range(len(cases)):
 
 # Opens a window for each test case with their info
 for i, case in enumerate(cases):
-    fig, axs = plt.subplots(3, 1, figsize=(10, 10))
+    fig, axs = plt.subplots(3, 1, figsize=(5, 5))
     
     axs[0].bar(case["sorter"], case["average time"], color = "y")
     axs[0].set_title(f"Case Test {i+1}")
