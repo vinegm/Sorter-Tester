@@ -37,3 +37,30 @@ def tree_sort(array):
     sorted = []  # Create a array for collecting the nodes of the tree
     travel(root, sorted)  # Travels though the nodes collecting them
     return sorted
+
+
+def insert_counting(root, value, comparisons):
+    """Inserts the values of the array in the binary tree"""
+    if root == None:
+        return TreeNode(value)  # Returns a node of the tree if the root is None
+    
+    comparisons[0] += 1
+
+    if value < root.value:
+        root.left = insert_counting(root.left, value, comparisons)  # For a value smaller than this node, we add it to the left branch
+    else:
+        root.right = insert_counting(root.right, value, comparisons)  # For a value bigger than this node, we add it to the left branch
+    
+    return root
+
+
+def tree_sort_counting(array):
+    root = None
+    comparisons = [0]
+
+    for value in array:
+        root = insert_counting(root, value, comparisons)
+
+    sorted = []
+    travel(root, sorted)
+    return sorted, comparisons[0], 0

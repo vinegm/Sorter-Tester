@@ -13,6 +13,7 @@ import MergeSort
 import QuickSort
 import RadixSort
 import ShellSort
+import TreeSort
 
 
 def calculate_average_time(array_of_times):
@@ -92,10 +93,11 @@ sorters = np.array([[BubbleSort.bubble2_sort, BubbleSort.bubble2_sort_counting],
                     [MergeSort.merge_sort, MergeSort.merge_sort_counting],
                     [ShellSort.shellSort, ShellSort.shellSort_counting],
                     [SelectionSort.selectionSort, SelectionSort.selectionSort_counting],
-                    [RadixSort.index_sort, None]])
+                    [RadixSort.index_sort, None],
+                    [TreeSort.tree_sort, TreeSort.tree_sort_counting]])
 
 test_cases = TestCases.test_cases()  # Gets the test cases
-amount_of_tests = 5  # Sets the amount of tests to be made on each case
+amount_of_tests = 250  # Sets the amount of tests to be made on each case
 
 data = {"sorter": [],
         "average time": [],
