@@ -49,8 +49,9 @@ def test_timing(test_case, sorter, amount_of_tests):
     test_times = np.array([])
 
     while (tests_made < amount_of_tests):
+        case = np.copy(test_case)
         startTimer = timeit.default_timer()
-        sorter(test_case)
+        sorter(case)
         stopTimer = timeit.default_timer()
 
         test_times = np.append(test_times, (stopTimer - startTimer))
@@ -88,11 +89,12 @@ def test_sorter(test_case, sorter, amout_of_tests):
 sorters = np.array([[BubbleSort.bubble2_sort, BubbleSort.bubble2_sort_counting],
                     [InsertionSort.insert_sort, InsertionSort.insert_sort_otimizado_counting],
                     [QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
+                    [MergeSort.merge_sort, MergeSort.merge_sort_counting],
                     [SelectionSort.selectionSort, SelectionSort.selectionSort_counting],
                     [RadixSort.index_sort, None]])
 
 test_cases = TestCases.test_cases()  # Gets the test cases
-amount_of_tests = 250  # Sets the amount of tests to be made on each case
+amount_of_tests = 5  # Sets the amount of tests to be made on each case
 
 data = {"sorter": [],
         "average time": [],

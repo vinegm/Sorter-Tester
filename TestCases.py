@@ -5,9 +5,8 @@ import random
 # ESCREVER MELHORES TESTES!!!!!!!!!!!!!!!!!!!!!!!!!
 def test_cases():
     # Para testar: Lista de números em ordem aleatória.
-    numbers = list(range(1, 101))
-    random.shuffle(numbers)
-    cenario1 = numbers[:1000]
+    cenario1 = list(range(1, 101))
+    random.shuffle(cenario1)
 
     # Para testar: Uma lista que já está ordenada.
     cenario2 = list(range(1, 101))
@@ -18,7 +17,7 @@ def test_cases():
 
     # Para testar: Uma lista contendo elementos repetidos.
     cenario4 = list(range(1, 101))
-    repeated_numbers = random.sample(numbers, 50)
+    repeated_numbers = random.sample(cenario4, 50)
     cenario4 = np.append(cenario4, repeated_numbers)
     random.shuffle(cenario4)
 
