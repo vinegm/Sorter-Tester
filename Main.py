@@ -34,11 +34,11 @@ def calculate_average_time(array_of_times):
     return average_time
 
 
-def test_timing(array, sorter, amount_of_tests):
+def test_timing(test_case, sorter, amount_of_tests):
     """Tests a sorter a given amout of times to get a average time
     
     Parameters:
-    array (np.array): Array used for the tests
+    test_case (np.array): Array used for the tests
     sorter: Sorter used for the tests
     amount_of_tests (int): How many tests will be made to get a average time
 
@@ -49,10 +49,8 @@ def test_timing(array, sorter, amount_of_tests):
     test_times = np.array([])
 
     while (tests_made < amount_of_tests):
-        test_array = np.copy(array)
-
         startTimer = timeit.default_timer()
-        sorter(test_array)
+        sorter(test_case)
         stopTimer = timeit.default_timer()
 
         test_times = np.append(test_times, (stopTimer - startTimer))
@@ -76,10 +74,11 @@ def test_sorter(test_case, sorter, amout_of_tests):
     average_time: Average time of the sorter to complete the task on the given test
     comparisons: How many comparisons the sorter made
     swaps: How many comparisons the sorter swaps
-    """    
-    average_time = test_timing(test_case, sorter[0], amout_of_tests)
+    """
+    case = np.copy(test_case)  # Makes a copy so one test doest effect the other
+    average_time = test_timing(case, sorter[0], amout_of_tests)
     if sorter[1] != None:
-        sortedArray, comparisons, swaps = sorter[1](test)
+        sortedArray, comparisons, swaps = sorter[1](case)
     else:
         comparisons = 0
         swaps = 0

@@ -9,7 +9,7 @@ def insert_sort(vetor):
 
     while p > 0  and vetor[p - 1] > elemento_atual:     # A OTIMIZAÇÃO FICA NESSA PARTE AQUI, CASO O VALOR DA POSIÇÃO ANTERIOR SEJA MENOR, ELE NÃO FAZ MAIS A COMPARAÇÃO POIS TEORICAMENTE O RESTANTE JÁ ESTA ORDENADO.
       vetor[p] = vetor[p - 1]                           # A POSIÇÃO ATUAL DO VETOR RECEBE O VALOR DA POSIÇÃO ANTERIOR
-      atribuicoes += 1                                  # INCREMENTA O CONTADOR DAS ATRIBUIÇÕES EM 1
+      #atribuicoes += 1                                  # INCREMENTA O CONTADOR DAS ATRIBUIÇÕES EM 1
       p -= 1                                            # DECREMENTA A VARIAVEL DE CONTROLE DO FOR
 
     vetor[p] = elemento_atual                           # VETOR NA POSIÇÃO P RECEBE VALOR DA VARIAVEL ELEMENTO_ATUAL
