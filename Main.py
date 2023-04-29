@@ -90,6 +90,7 @@ sorters = np.array([[BubbleSort.bubble2_sort, BubbleSort.bubble2_sort_counting],
                     [InsertionSort.insert_sort, InsertionSort.insert_sort_otimizado_counting],
                     [QuickSort.quick_sort, QuickSort.quick_sort_for_counting],
                     [MergeSort.merge_sort, MergeSort.merge_sort_counting],
+                    [ShellSort.shellSort, ShellSort.shellSort_counting],
                     [SelectionSort.selectionSort, SelectionSort.selectionSort_counting],
                     [RadixSort.index_sort, None]])
 
