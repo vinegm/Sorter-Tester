@@ -134,45 +134,45 @@ def test_sorters(test_cases, sorters, amount_tests):
         print("-" * 25)
     return cases
 
-
-sorters = np.array([[Sorters.BubbleSort.bubble2_sort, Sorters.BubbleSort.bubble2_sort_counting],
-                    [Sorters.InsertionSort.insert_sort, Sorters.InsertionSort.insert_sort_otimizado_counting],
-                    [Sorters.QuickSort.quick_sort, Sorters.QuickSort.quick_sort_for_counting],
-                    [Sorters.MergeSort.merge_sort, Sorters.MergeSort.merge_sort_counting],
-                    [Sorters.ShellSort.shellSort, Sorters.ShellSort.shellSort_counting],
-                    [Sorters.SelectionSort.selectionSort, Sorters.SelectionSort.selectionSort_counting],
-                    [Sorters.RadixSort.index_sort, None],
-                    [Sorters.TreeSort.tree_sort, Sorters.TreeSort.tree_sort_counting]])
-
-
-test_cases = TestCases.test_cases()  # Gets the test cases
-amount_tests = 1  # Sets the amount of tests to be made on each case
-
-# Tests the sorters on the given tests and returns the results in data frames
-cases = test_sorters(test_cases, sorters, amount_tests)
-
-# Prints the data frames of each case to the termial
-print("-" * 50)
-for i in range(len(cases)):
-    print(f"Case{i+1}:\
-          \n{cases[i]}")
+if __name__ == "__main__":
+    # Makes a array of the sorters for ease of testing
+    sorters = np.array([[Sorters.BubbleSort.bubble2_sort, Sorters.BubbleSort.bubble2_sort_counting],
+                        [Sorters.InsertionSort.insert_sort, Sorters.InsertionSort.insert_sort_otimizado_counting],
+                        [Sorters.QuickSort.quick_sort, Sorters.QuickSort.quick_sort_for_counting],
+                        [Sorters.MergeSort.merge_sort, Sorters.MergeSort.merge_sort_counting],
+                        [Sorters.ShellSort.shellSort, Sorters.ShellSort.shellSort_counting],
+                        [Sorters.SelectionSort.selectionSort, Sorters.SelectionSort.selectionSort_counting],
+                        [Sorters.RadixSort.index_sort, None],
+                        [Sorters.TreeSort.tree_sort, Sorters.TreeSort.tree_sort_counting]])
+    
+    amount_tests = input("How many tests should be made to get the average time?")
+    test_cases = TestCases.test_cases()  # Gets the test cases
+    
+    # Tests the sorters on the given tests and returns the results in data frames
+    cases = test_sorters(test_cases, sorters, amount_tests)
+    
+    # Prints the data frames of each case to the termial
     print("-" * 50)
-
-# Opens a window for each test case with their info
-for i, case in enumerate(cases):
-    fig, axs = plt.subplots(3, 1, figsize=(5, 5))
+    for i in range(len(cases)):
+        print(f"Case{i+1}:\
+              \n{cases[i]}")
+        print("-" * 50)
     
-    axs[0].bar(case["sorter"], case["average time"], color = "y")
-    axs[0].set_title(f"Case Test {i+1}")
-    axs[0].set_ylabel("Time (microseconds)")
+    # Opens a window for each test case with their info
+    for i, case in enumerate(cases):
+        fig, axs = plt.subplots(3, 1, figsize=(5, 5))
+        
+        axs[0].bar(case["sorter"], case["average time"], color = "y")
+        axs[0].set_title(f"Case Test {i+1}")
+        axs[0].set_ylabel("Time (microseconds)")
+        
+        axs[1].bar(case["sorter"], case["comparisons"], color = "b")
+        axs[1].set_ylabel("Quantity of Comparisons")
     
-    axs[1].bar(case["sorter"], case["comparisons"], color = "b")
-    axs[1].set_ylabel("Quantity of Comparisons")
-
-    axs[2].bar(case["sorter"], case["swaps"], color = "g")
-    axs[2].set_xlabel("Sorter")
-    axs[2].set_ylabel("Quantity of Swaps")
+        axs[2].bar(case["sorter"], case["swaps"], color = "g")
+        axs[2].set_xlabel("Sorter")
+        axs[2].set_ylabel("Quantity of Swaps")
+        
+        plt.tight_layout()
     
-    plt.tight_layout()
-
-plt.show()
+    plt.show()
