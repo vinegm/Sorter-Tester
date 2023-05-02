@@ -144,8 +144,8 @@ if __name__ == "__main__":
                         [Sorters.SelectionSort.selectionSort, Sorters.SelectionSort.selectionSort_counting],
                         [Sorters.RadixSort.index_sort, None],
                         [Sorters.TreeSort.tree_sort, Sorters.TreeSort.tree_sort_counting]])
-    
-    amount_tests = input("How many tests should be made to get the average time?")
+
+    amount_tests = int(input("How many tests should be made to get an average time?"))
     test_cases = TestCases.test_cases()  # Gets the test cases
     
     # Tests the sorters on the given tests and returns the results in data frames

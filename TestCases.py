@@ -2,7 +2,6 @@ import numpy as np
 from numpy import random as rd
 import random
 
-# ESCREVER MELHORES TESTES!!!!!!!!!!!!!!!!!!!!!!!!!
 def test_cases():
     # Para testar: Lista de números em ordem aleatória.
     cenario1 = list(range(1, 101))
