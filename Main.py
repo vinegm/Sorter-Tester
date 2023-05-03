@@ -134,31 +134,26 @@ def test_sorters(test_cases, sorters, amount_tests):
         print("-" * 25)
     return cases
 
-if __name__ == "__main__":
-    # Makes a array of the sorters for ease of testing
-    sorters = np.array([[Sorters.BubbleSort.bubble2_sort, Sorters.BubbleSort.bubble2_sort_counting],
-                        [Sorters.InsertionSort.insert_sort, Sorters.InsertionSort.insert_sort_otimizado_counting],
-                        [Sorters.QuickSort.quick_sort, Sorters.QuickSort.quick_sort_for_counting],
-                        [Sorters.MergeSort.merge_sort, Sorters.MergeSort.merge_sort_counting],
-                        [Sorters.ShellSort.shellSort, Sorters.ShellSort.shellSort_counting],
-                        [Sorters.SelectionSort.selectionSort, Sorters.SelectionSort.selectionSort_counting],
-                        [Sorters.RadixSort.index_sort, None],
-                        [Sorters.TreeSort.tree_sort, Sorters.TreeSort.tree_sort_counting]])
 
-    amount_tests = int(input("How many tests should be made to get an average time?"))
-    test_cases = TestCases.test_cases()  # Gets the test cases
-    
-    # Tests the sorters on the given tests and returns the results in data frames
-    cases = test_sorters(test_cases, sorters, amount_tests)
-    
-    # Prints the data frames of each case to the termial
+def show_dataframes(cases):
+    """Prints each case on the terminal
+
+    Parameters:
+    cases (Array): Array of cases that will be shown on the terminal 
+    """
     print("-" * 50)
     for i in range(len(cases)):
         print(f"Case{i+1}:\
-              \n{cases[i]}")
+                \n{cases[i]}")
         print("-" * 50)
-    
-    # Opens a window for each test case with their info
+
+
+def show_graphs(cases):
+    """Makes a window for each case with graphs
+
+    Parameters:
+    cases (Array): Array of cases that will be shown in a window each
+    """
     for i, case in enumerate(cases):
         fig, axs = plt.subplots(3, 1, figsize=(5, 5))
         
@@ -176,3 +171,29 @@ if __name__ == "__main__":
         plt.tight_layout()
     
     plt.show()
+
+
+if __name__ == "__main__":
+
+    amount_tests = int(input("How many tests should be made to get an average time?"))
+    in_console = input("Do you want the tests results to be printed to the console? (Yes/No)").lower()
+    in_graph = input("Do you want the tests results to shown in graphs? (Yes/No)").lower()
+
+    # Makes a array of the sorters for ease of testing
+    sorters = np.array([[Sorters.BubbleSort.bubble2_sort, Sorters.BubbleSort.bubble2_sort_counting],
+                        [Sorters.InsertionSort.insert_sort, Sorters.InsertionSort.insert_sort_otimizado_counting],
+                        [Sorters.QuickSort.quick_sort, Sorters.QuickSort.quick_sort_for_counting],
+                        [Sorters.MergeSort.merge_sort, Sorters.MergeSort.merge_sort_counting],
+                        [Sorters.ShellSort.shellSort, Sorters.ShellSort.shellSort_counting],
+                        [Sorters.SelectionSort.selectionSort, Sorters.SelectionSort.selectionSort_counting],
+                        [Sorters.RadixSort.index_sort, None],
+                        [Sorters.TreeSort.tree_sort, Sorters.TreeSort.tree_sort_counting]])
+    test_cases = TestCases.test_cases()  # Gets the test cases
+    
+    # Tests the sorters on the given tests and returns the results in data frames
+    cases = test_sorters(test_cases, sorters, amount_tests)
+
+    if in_console == "yes":
+        show_dataframes(cases)
+    if in_graph == "yes":
+        show_graphs(cases)
