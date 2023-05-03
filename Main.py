@@ -173,11 +173,43 @@ def show_graphs(cases):
     plt.show()
 
 
+def flip_state(*args):
+    """Flips the state of one or multiple booleans
+    
+    Parameters:
+    *args (bool): Boolean or booleans that will be flipped
+    
+    Retuns:
+    fliped_states (array): Array of the flipped booleans
+    """
+    fliped_states = []
+    for bool in args:
+        bool = not bool
+        fliped_states.append(bool)
+    return fliped_states
+
+
 if __name__ == "__main__":
 
-    amount_tests = int(input("How many tests should be made to get an average time?"))
-    in_console = input("Do you want the tests results to be printed to the console? (Yes/No)").lower()
-    in_graph = input("Do you want the tests results to shown in graphs? (Yes/No)").lower()
+    select_tests = input("\nDo you want to run the standard tests cases?\
+                        \n1. Yes, run the already stablished tests cases.\
+                        \n2. I want to edit what tests will be run.\n")
+    
+    if select_tests == "1":
+        test_cases = TestCases.test_cases()  # Gets the test cases
+    if select_tests == "2":
+        raise Exception("Code Missing")
+
+
+    amount_tests = int(input("\nHow many tests should be made to get an average time?\n"))
+
+    in_console = input("\nDo you want the tests results to be printed to the console?\
+                      \n1. Yes\
+                      \n2. No\n")
+    
+    in_graph = input("\nDo you want the tests results to shown in graphs?\
+                    \n1. Yes\
+                    \n2. No\n")
 
     # Makes a array of the sorters for ease of testing
     sorters = np.array([[Sorters.BubbleSort.bubble2_sort, Sorters.BubbleSort.bubble2_sort_counting],
@@ -188,12 +220,11 @@ if __name__ == "__main__":
                         [Sorters.SelectionSort.selectionSort, Sorters.SelectionSort.selectionSort_counting],
                         [Sorters.RadixSort.index_sort, None],
                         [Sorters.TreeSort.tree_sort, Sorters.TreeSort.tree_sort_counting]])
-    test_cases = TestCases.test_cases()  # Gets the test cases
     
     # Tests the sorters on the given tests and returns the results in data frames
     cases = test_sorters(test_cases, sorters, amount_tests)
 
-    if in_console == "yes":
+    if in_console == "1":
         show_dataframes(cases)
-    if in_graph == "yes":
+    if in_graph == "1":
         show_graphs(cases)
