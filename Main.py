@@ -216,7 +216,6 @@ def choose_cases():
     for i, run in enumerate(tests_run):
         if run == True:
             run_cases.append(test_cases[i])
-    print(run_cases)
     return run_cases
 
 
@@ -236,7 +235,6 @@ if __name__ == "__main__":
             print("Option unavailable.")
 
     sorters = Sorters.sorters()
-    print(sorters)
 
     while True:
         amount_tests = int(input("\nHow many tests should be made to get an average time?\n"))
@@ -244,13 +242,21 @@ if __name__ == "__main__":
             break
         print("Amount of tests must be more than 0.")
 
-    in_console = input("\nDo you want the tests results to be printed to the console?\
-                       \n1. Yes\
-                       \n2. No\n")
+    while True:
+        in_console = input("\nDo you want the tests results to be printed to the console?\
+                           \n1. Yes\
+                           \n2. No\n")
+        if in_console == "1" or in_console == "2":
+            break
+        print("Option unavailable.")
     
-    in_graph = input("\nDo you want the tests results to shown in graphs?\
-                     \n1. Yes\
-                     \n2. No\n")
+    while True:
+        in_graph = input("\nDo you want the tests results to shown in graphs?\
+                         \n1. Yes\
+                         \n2. No\n")
+        if in_console == "1" or in_console == "2":
+            break
+        print("Option unavailable.")
     
     # Tests the sorters on the given tests and returns the results in data frames
     cases = test_sorters(test_cases, sorters, amount_tests)
