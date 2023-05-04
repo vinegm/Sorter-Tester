@@ -33,7 +33,19 @@ def test_cases():
     random.shuffle(cenario7)
 
     # Para testar: Uma lista longa.
-    cenario8 = rd.randint(0, 10_000, 1_000)
+    cenario8 = rd.randint(0, 1_000, 500)
 
-    testCases = [cenario1, cenario2, cenario3, cenario4, cenario5, cenario6, cenario7, cenario8]
+    # Small list
+    small = rd.randint(0, 10_000, 1_000)
+
+    # Medium list
+    medium = rd.randint(0, 50_000, 10_000)
+
+    # Big list
+    big = rd.randint(0, 100_000, 50_000)
+
+    # Super list
+    super = rd.randint(0, 200_000, 100_000)
+
+    testCases = [cenario1, cenario2, cenario3, cenario4, cenario5, cenario6, cenario7, cenario8, small, medium, big, super]
     return testCases

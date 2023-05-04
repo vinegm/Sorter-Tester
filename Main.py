@@ -8,6 +8,7 @@ import os
 import TestCases
 from Sorters import Sorters
 
+
 def calculate_average_time(array_times):
     """Takes a array with times samples and calculates the average of them
     
@@ -190,10 +191,12 @@ def flip_state(*args):
 
 
 def check_selected(selected):
+    """Checks if at least one sorter/test was selected"""
     for i in selected:
         if i == True:
             return 1
     return 0
+
 
 def choose_cases():
     """Allows the user to choose which test cases to use
@@ -205,7 +208,7 @@ def choose_cases():
     tests_run = [True for _ in range(len(test_cases))]
     while True:
         try:
-            flip = int(input(f"\nChoose which cases to run?\
+            flip = int(input(f"\nChoose which cases to run:\
                              \n1. An unordered list with numbers 1 to 100. {tests_run[0]}\
                              \n2. An ascending ordered list with numbers 1 to 100. {tests_run[1]}\
                              \n3. A descending ordered list with numbers 100 to 1. {tests_run[2]}\
@@ -213,20 +216,28 @@ def choose_cases():
                              \n5. An empty list. {tests_run[4]}\
                              \n6. A list with a single number. {tests_run[5]}\
                              \n7. A list with 100 numbers, 1 to 50, one of the numbers repeats 50 times. {tests_run[6]}\
-                             \n8. An unordered list with 1.000 numbers, randomly picked between 1 and 10.000. {tests_run[7]}\
+                             \n8. An unordered list with 500 numbers, randomly picked between 1 and 1.000. {tests_run[7]}\
+                             \n9. An unordered list with 1.000 numbers, randomly picked between 1 and 5.000. {tests_run[8]}\
+                             \n10. An unordered list with 10.000 numbers, randomly picked between 1 and 50.000. {tests_run[9]}\
+                             \n11. An unordered list with 50.000 numbers, randomly picked between 1 and 100.000. {tests_run[10]}\
+                             \n12. An unordered list with 100.000 numbers, randomly picked between 1 and 200.000. {tests_run[11]}\
                              \n20. Flip choosen tests.\
                              \n0. Run the chosen tests.\n"))
         except ValueError:
             print("Type the number of the action.")
-            pass
+            continue
+
         if flip == 0:
             if check_selected(tests_run) == 1:
                 break
             print("At least one test must be selected.")
+
         elif flip == 20:
             tests_run = flip_state(*tests_run)
-        elif flip > 8:
+
+        elif flip > 12:
             print("This action doesn't exist.")
+
         else:
             temp = flip_state(tests_run[flip-1])
             tests_run[flip-1] = temp[0]
@@ -236,7 +247,9 @@ def choose_cases():
     for i, run in enumerate(tests_run):
         if run == True:
             run_cases.append(test_cases[i])
+
     return run_cases
+
 
 def choose_sorters():
     """Allows the user to choose which sorters to test
@@ -248,7 +261,7 @@ def choose_sorters():
     sorters_run = [True for _ in range(len(sorters))]
     while True:
         try:
-            flip = int(input(f"\nChoose which cases to run?\
+            flip = int(input(f"\nChoose which sorters to test:\
                              \n1. Bubble Sort. {sorters_run[0]}\
                              \n2. Insertion Sort. {sorters_run[1]}\
                              \n3. Quick Sort. {sorters_run[2]}\
@@ -258,18 +271,22 @@ def choose_sorters():
                              \n7. Radix Sort. {sorters_run[6]}\
                              \n8. Tree Sort. {sorters_run[7]}\
                              \n20. Flip choosen sorters.\
-                             \n0. Run the chosen tests.\n"))
+                             \n0. Run the chosen sorters.\n"))
         except ValueError:
             print("Type the number of the action.")
-            pass
+            continue
+
         if flip == 0:
             if check_selected(sorters_run) == 1:
                 break
             print("At least one sorter must be selected.")
+
         elif flip == 20:
             sorters_run = flip_state(*sorters_run)
+
         elif flip > 8:
             print("This action doesn't exist.")
+
         else:
             temp = flip_state(sorters_run[flip-1])
             sorters_run[flip-1] = temp[0]
@@ -279,6 +296,7 @@ def choose_sorters():
     for i, run in enumerate(sorters_run):
         if run == True:
             run_sorters.append(sorters[i])
+
     return run_sorters
 
 
@@ -288,52 +306,62 @@ if __name__ == "__main__":
         select_tests = input("\nDo you want to run the standard tests cases?\
                              \n1. Yes, run the already stablished tests cases.\
                              \n2. I want to edit what tests will be run.\n")
+        
         if select_tests == "1":
             test_cases = TestCases.test_cases()  # Gets the test cases
             break
+
         elif select_tests == "2":
             test_cases = choose_cases()  # Ask the user what tests to run
             break
-        else:
-            print("Option unavailable.")
+
+        print("Option unavailable.")
 
     while True:
         select_sorters = input("\nDo you want to test the all the available sorters?\
                                \n1. Yes, test all the sorters.\
                                \n2. I want to choose what sorters to test.\n")
+        
         if select_tests == "1":
             sorters = Sorters.sorters()  # Gets the sorters
             break
+
         elif select_tests == "2":
             sorters = choose_sorters()  # Ask the user what sorters to test
             break
-        else:
-            print("Option unavailable.")
+
+        print("Option unavailable.")
 
     while True:
         try:
             amount_tests = int(input("\nHow many tests should be made to get an average time?\n"))
         except ValueError:
             print("You must insert a value.")
-            pass
+            continue
+
         if amount_tests > 0:
             break
+
         print("Amount of tests must be more than 0.")
 
     while True:
         in_console = input("\nDo you want the tests results to be printed to the console?\
                            \n1. Yes\
                            \n2. No\n")
+        
         if in_console == "1" or in_console == "2":
             break
+
         print("Option unavailable.")
     
     while True:
         in_graph = input("\nDo you want the tests results to shown in graphs?\
                          \n1. Yes\
                          \n2. No\n")
+        
         if in_console == "1" or in_console == "2":
             break
+        
         print("Option unavailable.")
     
     # Tests the sorters on the given tests and returns the results in data frames
@@ -341,5 +369,6 @@ if __name__ == "__main__":
 
     if in_console == "1":
         show_dataframes(cases)
+
     if in_graph == "1":
         show_graphs(cases)
