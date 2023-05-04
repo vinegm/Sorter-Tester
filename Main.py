@@ -189,11 +189,21 @@ def flip_state(*args):
     return fliped_states
 
 
+def check_selected(selected):
+    for i in selected:
+        if i == True:
+            return 1
+    return 0
+
 def choose_cases():
+    """Allows the user to choose which test cases to use
+    
+    Returns:
+    run_cases (array): Array of cases that will be used
+    """
     test_cases = TestCases.test_cases()
     tests_run = [True for _ in range(len(test_cases))]
     while True:
-        print(tests_run)
         flip = int(input(f"\nChoose which cases to run?\
                          \n1. An unordered list with numbers 1 to 100. {tests_run[0]}\
                          \n2. An ascending ordered list with numbers 1 to 100. {tests_run[1]}\
@@ -203,20 +213,59 @@ def choose_cases():
                          \n6. A list with a single number. {tests_run[5]}\
                          \n7. A list with 100 numbers, 1 to 50, one number appers 50 times. {tests_run[6]}\
                          \n8. An unordered list with 1.000 numbers, randomly picked between 1 and 10.000. {tests_run[7]}\
-                         \n0. Run the chosen tests."))
+                         \n0. Run the chosen tests.\n"))
         if flip == 0:
-            break
+            if check_selected(tests_run) == 1:
+                break
+            print("At least one test must be selected.")
         elif flip > 8:
             print("This test doesn't exist.")
         else:
             temp = flip_state(tests_run[flip-1])
             tests_run[flip-1] = temp[0]
+            del temp
     
     run_cases = []
     for i, run in enumerate(tests_run):
         if run == True:
             run_cases.append(test_cases[i])
     return run_cases
+
+def choose_sorters():
+    """Allows the user to choose which sorters to test
+    
+    Returns:
+    run_sorters (array): Array of sorters that will be tested
+    """
+    sorters = Sorters.sorters()
+    sorters_run = [True for _ in range(len(sorters))]
+    while True:
+        flip = int(input(f"\nChoose which cases to run?\
+                         \n1. Bubble Sort. {sorters_run[0]}\
+                         \n2. Insertion Sort. {sorters_run[1]}\
+                         \n3. Quick Sort. {sorters_run[2]}\
+                         \n4. Merge Sort. {sorters_run[3]}\
+                         \n5. Shell Sort. {sorters_run[4]}\
+                         \n6. Selection Sort. {sorters_run[5]}\
+                         \n7. Radix Sort. {sorters_run[6]}\
+                         \n8. Tree Sort. {sorters_run[7]}\
+                         \n0. Run the chosen tests.\n"))
+        if flip == 0:
+            if check_selected(sorters_run) == 1:
+                break
+            print("At least one sorter must be selected.")
+        elif flip > 8:
+            print("This test doesn't exist.")
+        else:
+            temp = flip_state(sorters_run[flip-1])
+            sorters_run[flip-1] = temp[0]
+            del temp
+
+    run_sorters = []
+    for i, run in enumerate(sorters_run):
+        if run == True:
+            run_sorters.append(sorters[i])
+    return run_sorters
 
 
 if __name__ == "__main__":
@@ -234,7 +283,18 @@ if __name__ == "__main__":
         else:
             print("Option unavailable.")
 
-    sorters = Sorters.sorters()
+    while True:
+        select_sorters = input("\nDo you want to test the all the available sorters?\
+                            \n1. Yes, test all the sorters.\
+                            \n2. I want to choose what sorters to test.\n")
+        if select_tests == "1":
+            sorters = Sorters.sorters()  # Gets the sorters
+            break
+        elif select_tests == "2":
+            sorters = choose_sorters()  # Ask the user what sorters to test
+            break
+        else:
+            print("Option unavailable.")
 
     while True:
         amount_tests = int(input("\nHow many tests should be made to get an average time?\n"))
