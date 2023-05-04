@@ -204,22 +204,29 @@ def choose_cases():
     test_cases = TestCases.test_cases()
     tests_run = [True for _ in range(len(test_cases))]
     while True:
-        flip = int(input(f"\nChoose which cases to run?\
-                         \n1. An unordered list with numbers 1 to 100. {tests_run[0]}\
-                         \n2. An ascending ordered list with numbers 1 to 100. {tests_run[1]}\
-                         \n3. A descending ordered list with numbers 100 to 1. {tests_run[2]}\
-                         \n4. A list with 100 numbers, 1 to 50, every number appers twice. {tests_run[3]}\
-                         \n5. An empty list. {tests_run[4]}\
-                         \n6. A list with a single number. {tests_run[5]}\
-                         \n7. A list with 100 numbers, 1 to 50, one number appers 50 times. {tests_run[6]}\
-                         \n8. An unordered list with 1.000 numbers, randomly picked between 1 and 10.000. {tests_run[7]}\
-                         \n0. Run the chosen tests.\n"))
+        try:
+            flip = int(input(f"\nChoose which cases to run?\
+                             \n1. An unordered list with numbers 1 to 100. {tests_run[0]}\
+                             \n2. An ascending ordered list with numbers 1 to 100. {tests_run[1]}\
+                             \n3. A descending ordered list with numbers 100 to 1. {tests_run[2]}\
+                             \n4. A list with 100 numbers, 1 to 50, every number appers twice. {tests_run[3]}\
+                             \n5. An empty list. {tests_run[4]}\
+                             \n6. A list with a single number. {tests_run[5]}\
+                             \n7. A list with 100 numbers, 1 to 50, one of the numbers repeats 50 times. {tests_run[6]}\
+                             \n8. An unordered list with 1.000 numbers, randomly picked between 1 and 10.000. {tests_run[7]}\
+                             \n20. Flip choosen tests.\
+                             \n0. Run the chosen tests.\n"))
+        except ValueError:
+            print("Type the number of the action.")
+            pass
         if flip == 0:
             if check_selected(tests_run) == 1:
                 break
             print("At least one test must be selected.")
+        elif flip == 20:
+            tests_run = flip_state(*tests_run)
         elif flip > 8:
-            print("This test doesn't exist.")
+            print("This action doesn't exist.")
         else:
             temp = flip_state(tests_run[flip-1])
             tests_run[flip-1] = temp[0]
@@ -240,22 +247,29 @@ def choose_sorters():
     sorters = Sorters.sorters()
     sorters_run = [True for _ in range(len(sorters))]
     while True:
-        flip = int(input(f"\nChoose which cases to run?\
-                         \n1. Bubble Sort. {sorters_run[0]}\
-                         \n2. Insertion Sort. {sorters_run[1]}\
-                         \n3. Quick Sort. {sorters_run[2]}\
-                         \n4. Merge Sort. {sorters_run[3]}\
-                         \n5. Shell Sort. {sorters_run[4]}\
-                         \n6. Selection Sort. {sorters_run[5]}\
-                         \n7. Radix Sort. {sorters_run[6]}\
-                         \n8. Tree Sort. {sorters_run[7]}\
-                         \n0. Run the chosen tests.\n"))
+        try:
+            flip = int(input(f"\nChoose which cases to run?\
+                             \n1. Bubble Sort. {sorters_run[0]}\
+                             \n2. Insertion Sort. {sorters_run[1]}\
+                             \n3. Quick Sort. {sorters_run[2]}\
+                             \n4. Merge Sort. {sorters_run[3]}\
+                             \n5. Shell Sort. {sorters_run[4]}\
+                             \n6. Selection Sort. {sorters_run[5]}\
+                             \n7. Radix Sort. {sorters_run[6]}\
+                             \n8. Tree Sort. {sorters_run[7]}\
+                             \n20. Flip choosen sorters.\
+                             \n0. Run the chosen tests.\n"))
+        except ValueError:
+            print("Type the number of the action.")
+            pass
         if flip == 0:
             if check_selected(sorters_run) == 1:
                 break
             print("At least one sorter must be selected.")
+        elif flip == 20:
+            sorters_run = flip_state(*sorters_run)
         elif flip > 8:
-            print("This test doesn't exist.")
+            print("This action doesn't exist.")
         else:
             temp = flip_state(sorters_run[flip-1])
             sorters_run[flip-1] = temp[0]
@@ -272,8 +286,8 @@ if __name__ == "__main__":
 
     while True:
         select_tests = input("\nDo you want to run the standard tests cases?\
-                            \n1. Yes, run the already stablished tests cases.\
-                            \n2. I want to edit what tests will be run.\n")
+                             \n1. Yes, run the already stablished tests cases.\
+                             \n2. I want to edit what tests will be run.\n")
         if select_tests == "1":
             test_cases = TestCases.test_cases()  # Gets the test cases
             break
@@ -285,8 +299,8 @@ if __name__ == "__main__":
 
     while True:
         select_sorters = input("\nDo you want to test the all the available sorters?\
-                            \n1. Yes, test all the sorters.\
-                            \n2. I want to choose what sorters to test.\n")
+                               \n1. Yes, test all the sorters.\
+                               \n2. I want to choose what sorters to test.\n")
         if select_tests == "1":
             sorters = Sorters.sorters()  # Gets the sorters
             break
@@ -297,7 +311,11 @@ if __name__ == "__main__":
             print("Option unavailable.")
 
     while True:
-        amount_tests = int(input("\nHow many tests should be made to get an average time?\n"))
+        try:
+            amount_tests = int(input("\nHow many tests should be made to get an average time?\n"))
+        except ValueError:
+            print("You must insert a value.")
+            pass
         if amount_tests > 0:
             break
         print("Amount of tests must be more than 0.")
