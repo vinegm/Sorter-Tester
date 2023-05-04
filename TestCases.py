@@ -15,7 +15,7 @@ def test_cases():
     cenario3.reverse()
 
     # Para testar: Uma lista contendo elementos repetidos.
-    cenario4 = list(range(1, 101))
+    cenario4 = list(range(1, 51))
     repeated_numbers = random.sample(cenario4, 50)
     cenario4 = np.append(cenario4, repeated_numbers)
     random.shuffle(cenario4)

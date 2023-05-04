@@ -189,37 +189,68 @@ def flip_state(*args):
     return fliped_states
 
 
+def choose_cases():
+    test_cases = TestCases.test_cases()
+    tests_run = [True for _ in range(len(test_cases))]
+    while True:
+        print(tests_run)
+        flip = int(input(f"\nChoose which cases to run?\
+                         \n1. An unordered list with numbers 1 to 100. {tests_run[0]}\
+                         \n2. An ascending ordered list with numbers 1 to 100. {tests_run[1]}\
+                         \n3. A descending ordered list with numbers 100 to 1. {tests_run[2]}\
+                         \n4. A list with 100 numbers, 1 to 50, every number appers twice. {tests_run[3]}\
+                         \n5. An empty list. {tests_run[4]}\
+                         \n6. A list with a single number. {tests_run[5]}\
+                         \n7. A list with 100 numbers, 1 to 50, one number appers 50 times. {tests_run[6]}\
+                         \n8. An unordered list with 1.000 numbers, randomly picked between 1 and 10.000. {tests_run[7]}\
+                         \n0. Run the chosen tests."))
+        if flip == 0:
+            break
+        elif flip > 8:
+            print("This test doesn't exist.")
+        else:
+            temp = flip_state(tests_run[flip-1])
+            tests_run[flip-1] = temp[0]
+    
+    run_cases = []
+    for i, run in enumerate(tests_run):
+        if run == True:
+            run_cases.append(test_cases[i])
+    print(run_cases)
+    return run_cases
+
+
 if __name__ == "__main__":
 
-    select_tests = input("\nDo you want to run the standard tests cases?\
-                        \n1. Yes, run the already stablished tests cases.\
-                        \n2. I want to edit what tests will be run.\n")
-    
-    if select_tests == "1":
-        test_cases = TestCases.test_cases()  # Gets the test cases
-    if select_tests == "2":
-        raise Exception("Code Missing")
+    while True:
+        select_tests = input("\nDo you want to run the standard tests cases?\
+                            \n1. Yes, run the already stablished tests cases.\
+                            \n2. I want to edit what tests will be run.\n")
+        if select_tests == "1":
+            test_cases = TestCases.test_cases()  # Gets the test cases
+            break
+        elif select_tests == "2":
+            test_cases = choose_cases()  # Ask the user what tests to run
+            break
+        else:
+            print("Option unavailable.")
 
+    sorters = Sorters.sorters()
+    print(sorters)
 
-    amount_tests = int(input("\nHow many tests should be made to get an average time?\n"))
+    while True:
+        amount_tests = int(input("\nHow many tests should be made to get an average time?\n"))
+        if amount_tests > 0:
+            break
+        print("Amount of tests must be more than 0.")
 
     in_console = input("\nDo you want the tests results to be printed to the console?\
-                      \n1. Yes\
-                      \n2. No\n")
+                       \n1. Yes\
+                       \n2. No\n")
     
     in_graph = input("\nDo you want the tests results to shown in graphs?\
-                    \n1. Yes\
-                    \n2. No\n")
-
-    # Makes a array of the sorters for ease of testing
-    sorters = np.array([[Sorters.BubbleSort.bubble2_sort, Sorters.BubbleSort.bubble2_sort_counting],
-                        [Sorters.InsertionSort.insert_sort, Sorters.InsertionSort.insert_sort_otimizado_counting],
-                        [Sorters.QuickSort.quick_sort, Sorters.QuickSort.quick_sort_for_counting],
-                        [Sorters.MergeSort.merge_sort, Sorters.MergeSort.merge_sort_counting],
-                        [Sorters.ShellSort.shellSort, Sorters.ShellSort.shellSort_counting],
-                        [Sorters.SelectionSort.selectionSort, Sorters.SelectionSort.selectionSort_counting],
-                        [Sorters.RadixSort.index_sort, None],
-                        [Sorters.TreeSort.tree_sort, Sorters.TreeSort.tree_sort_counting]])
+                     \n1. Yes\
+                     \n2. No\n")
     
     # Tests the sorters on the given tests and returns the results in data frames
     cases = test_sorters(test_cases, sorters, amount_tests)
