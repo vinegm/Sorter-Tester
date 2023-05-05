@@ -77,13 +77,13 @@ def test_sorter(test_case, sorter, amount_tests):
     comparisons: How many comparisons the sorter made
     swaps: How many comparisons the sorter swaps
     """
-    # Makes a copy of the case, so one test doesnt effect the other
+    # Makes a copy of the case, so one test doesn't effect the other
     case = np.copy(test_case)
 
     # Calculates the average time of the sorter
     average_time = test_timing(case, sorter[0], amount_tests)
 
-    # If doesn't have a sorter for couting comparisons/swaps, sets them to 0
+    # If doesn't have a sorter for counting comparisons/swaps, sets them to 0
     if sorter[1] == None:
         comparisons = 0
         swaps = 0
@@ -180,14 +180,14 @@ def flip_state(*args):
     Parameters:
     *args (bool): Boolean or booleans that will be flipped
     
-    Retuns:
-    fliped_states (array): Array of the flipped booleans
+    Returns:
+    flipped_states (array): Array of the flipped booleans
     """
-    fliped_states = []
+    flipped_states = []
     for bool in args:
         bool = not bool
-        fliped_states.append(bool)
-    return fliped_states
+        flipped_states.append(bool)
+    return flipped_states
 
 
 def check_selected(selected):
@@ -212,7 +212,7 @@ def choose_cases():
                              \n1. An unordered list with numbers 1 to 100. {tests_run[0]}\
                              \n2. An ascending ordered list with numbers 1 to 100. {tests_run[1]}\
                              \n3. A descending ordered list with numbers 100 to 1. {tests_run[2]}\
-                             \n4. A list with 100 numbers, 1 to 50, every number appers twice. {tests_run[3]}\
+                             \n4. A list with 100 numbers, 1 to 50, every number appears twice. {tests_run[3]}\
                              \n5. An empty list. {tests_run[4]}\
                              \n6. A list with a single number. {tests_run[5]}\
                              \n7. A list with 100 numbers, 1 to 50, one of the numbers repeats 50 times. {tests_run[6]}\
@@ -221,7 +221,7 @@ def choose_cases():
                              \n10. An unordered list with 10.000 numbers, randomly picked between 1 and 50.000. {tests_run[9]}\
                              \n11. An unordered list with 50.000 numbers, randomly picked between 1 and 100.000. {tests_run[10]}\
                              \n12. An unordered list with 100.000 numbers, randomly picked between 1 and 200.000. {tests_run[11]}\
-                             \n20. Flip choosen tests.\
+                             \n20. Flip chosen tests.\
                              \n0. Run the chosen tests.\n"))
         except ValueError:
             print("Type the number of the action.")
@@ -270,7 +270,7 @@ def choose_sorters():
                              \n6. Selection Sort. {sorters_run[5]}\
                              \n7. Radix Sort. {sorters_run[6]}\
                              \n8. Tree Sort. {sorters_run[7]}\
-                             \n20. Flip choosen sorters.\
+                             \n20. Flip chosen sorters.\
                              \n0. Run the chosen sorters.\n"))
         except ValueError:
             print("Type the number of the action.")
@@ -304,7 +304,7 @@ if __name__ == "__main__":
 
     while True:
         select_tests = input("\nDo you want to run the standard tests cases?\
-                             \n1. Yes, run the already stablished tests cases.\
+                             \n1. Yes, run the already established tests cases.\
                              \n2. I want to edit what tests will be run.\n")
         
         if select_tests == "1":
