@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import copy
 import timeit
-import os
 
 import TestCases
 from Sorters import Sorters
@@ -209,18 +208,18 @@ def choose_cases():
     while True:
         try:
             flip = int(input(f"\nChoose which cases to run:\
-                             \n1. An unordered list with numbers 1 to 100. {tests_run[0]}\
-                             \n2. An ascending ordered list with numbers 1 to 100. {tests_run[1]}\
-                             \n3. A descending ordered list with numbers 100 to 1. {tests_run[2]}\
-                             \n4. A list with 100 numbers, 1 to 50, every number appears twice. {tests_run[3]}\
-                             \n5. An empty list. {tests_run[4]}\
-                             \n6. A list with a single number. {tests_run[5]}\
-                             \n7. A list with 100 numbers, 1 to 50, one of the numbers repeats 50 times. {tests_run[6]}\
-                             \n8. An unordered list with 500 numbers, randomly picked between 1 and 1.000. {tests_run[7]}\
-                             \n9. An unordered list with 1.000 numbers, randomly picked between 1 and 5.000. {tests_run[8]}\
-                             \n10. An unordered list with 10.000 numbers, randomly picked between 1 and 50.000. {tests_run[9]}\
-                             \n11. An unordered list with 50.000 numbers, randomly picked between 1 and 100.000. {tests_run[10]}\
-                             \n12. An unordered list with 100.000 numbers, randomly picked between 1 and 200.000. {tests_run[11]}\
+                             \n1. {'[X]' if tests_run[0] == True else '[ ]'} An unordered list with numbers 1 to 100.\
+                             \n2. {'[X]' if tests_run[1] == True else '[ ]'} An ascending ordered list with numbers 1 to 100.\
+                             \n3. {'[X]' if tests_run[2] == True else '[ ]'} A descending ordered list with numbers 100 to 1.\
+                             \n4. {'[X]' if tests_run[3] == True else '[ ]'} A list with 100 numbers, 1 to 50, every number appears twice.\
+                             \n5. {'[X]' if tests_run[4] == True else '[ ]'} An empty list.\
+                             \n6. {'[X]' if tests_run[5] == True else '[ ]'} A list with a single number.\
+                             \n7. {'[X]' if tests_run[6] == True else '[ ]'} A list with 100 numbers, 1 to 50, one of the numbers repeats 50 times.\
+                             \n8. {'[X]' if tests_run[7] == True else '[ ]'} An unordered list with 500 numbers, randomly picked between 1 and 1.000.\
+                             \n9. {'[X]' if tests_run[8] == True else '[ ]'} An unordered list with 1.000 numbers, randomly picked between 1 and 5.000.\
+                             \n10. {'[X]' if tests_run[9] == True else '[ ]'} An unordered list with 10.000 numbers, randomly picked between 1 and 50.000.\
+                             \n11. {'[X]' if tests_run[10] == True else '[ ]'} An unordered list with 50.000 numbers, randomly picked between 1 and 100.000.\
+                             \n12. {'[X]' if tests_run[11] == True else '[ ]'} An unordered list with 100.000 numbers, randomly picked between 1 and 200.000.\
                              \n20. Flip chosen tests.\
                              \n0. Run the chosen tests.\n"))
         except ValueError:
@@ -262,14 +261,14 @@ def choose_sorters():
     while True:
         try:
             flip = int(input(f"\nChoose which sorters to test:\
-                             \n1. Bubble Sort. {sorters_run[0]}\
-                             \n2. Insertion Sort. {sorters_run[1]}\
-                             \n3. Quick Sort. {sorters_run[2]}\
-                             \n4. Merge Sort. {sorters_run[3]}\
-                             \n5. Shell Sort. {sorters_run[4]}\
-                             \n6. Selection Sort. {sorters_run[5]}\
-                             \n7. Radix Sort. {sorters_run[6]}\
-                             \n8. Tree Sort. {sorters_run[7]}\
+                             \n1. {'[X]' if sorters_run[0] == True else '[ ]'} Bubble Sort.\
+                             \n2. {'[X]' if sorters_run[1] == True else '[ ]'} Insertion Sort.\
+                             \n3. {'[X]' if sorters_run[2] == True else '[ ]'} Quick Sort.\
+                             \n4. {'[X]' if sorters_run[3] == True else '[ ]'} Merge Sort.\
+                             \n5. {'[X]' if sorters_run[4] == True else '[ ]'} Shell Sort.\
+                             \n6. {'[X]' if sorters_run[5] == True else '[ ]'} Selection Sort.\
+                             \n7. {'[X]' if sorters_run[6] == True else '[ ]'} Radix Sort.\
+                             \n8. {'[X]' if sorters_run[7] == True else '[ ]'} Tree Sort.\
                              \n20. Flip chosen sorters.\
                              \n0. Run the chosen sorters.\n"))
         except ValueError:
@@ -322,11 +321,11 @@ if __name__ == "__main__":
                                \n1. Yes, test all the sorters.\
                                \n2. I want to choose what sorters to test.\n")
         
-        if select_tests == "1":
+        if select_sorters == "1":
             sorters = Sorters.sorters()  # Gets the sorters
             break
 
-        elif select_tests == "2":
+        elif select_sorters == "2":
             sorters = choose_sorters()  # Ask the user what sorters to test
             break
 
