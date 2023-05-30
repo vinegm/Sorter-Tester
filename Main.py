@@ -2,8 +2,10 @@ from src import *
 
 
 if __name__ == "__main__":
-    results = test_sorter(TEST_CASES[8], SORTERS[1], 5)
+    results = test_sorters(TEST_CASES, [SORTERS[3], SORTERS[7]], 1)
 
-    print(f"The sorter took {results[0]} microseconds")
-    print(f"Comparisons: {results[1]}")
-    print(f"swaps: {results[2]}")
+    directory = directory_path(results)
+
+    save_dataframes(directory, results)
+
+    save_graphs(directory, results)

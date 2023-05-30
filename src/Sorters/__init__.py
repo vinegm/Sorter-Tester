@@ -1,4 +1,3 @@
-import numpy as np
 from .bogosort import *
 from .treesort import *
 from .mergesort import *

@@ -37,6 +37,9 @@ def radix_sort(array: list) -> list:
 
         return array
 
+    if len(array) == 0:
+        return array
+
     max_value = max(array)
     exponent = 1
     while max_value // exponent > 0:
