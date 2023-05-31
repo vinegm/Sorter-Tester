@@ -47,8 +47,9 @@ def shell_sort_counting(array: list) -> list:
                 comparisons += 1
                 swaps += 1
 
-            array[j] = temp
-            swaps += 1
+            if i != j:
+                array[j] = temp
+                swaps += 1
 
         gap //= 2
 

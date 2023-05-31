@@ -3,6 +3,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import copy
 import time
+from openpyxl import Workbook
+from openpyxl.utils.dataframe import dataframe_to_rows
+from openpyxl.styles import Font, Border, Side, PatternFill
+from openpyxl.utils import get_column_letter
 from pathlib import Path
 
 
@@ -15,11 +19,11 @@ def calculate_average_time(array_times: list) -> int:
     Returns:
     average_time(int): Time in average the algorithm took in microseconds
     """
-    sum_times = 0
+    try:
+        sum_times = array_times.sum()
 
-    # Calculate the sum of the times
-    for i in array_times:
-        sum_times += i
+    except AttributeError:
+        sum_times = sum(array_times)
 
     # Calculates the average time 1.000.000 to turn the value into a int
     average_time = int((sum_times / len(array_times))*1_000_000)
@@ -38,10 +42,13 @@ def test_timing(test_case: list, sorter, amount_tests: int) -> int:
     Returns:
     average_time(int): Time the sorter took in average to complete the task
     """
-    tests_made = 0
+    if amount_tests < 1:
+        raise ValueError("Amount of tests must be 1 or more!")
+    
     # Creates an empty array to store the results of every test
     test_times = np.array([])
 
+    tests_made = 0
     while (tests_made < amount_tests):
         # Makes a copy of the test case to not interfere in the next tests
         case = np.copy(test_case)
@@ -74,6 +81,9 @@ def test_sorter(test_case: list, sorter, amount_tests: int) -> tuple:
     comparisons: How many comparisons the sorter made
     swaps: How many comparisons the sorter swaps
     """
+    if amount_tests < 1:
+        raise ValueError("Amount of tests must be 1 or more!")
+    
     # Makes a copy of the case, so one test doesn't effect the other
     case = np.copy(test_case)
 
@@ -107,6 +117,10 @@ def test_sorters(test_cases: dict, sorters, amount_tests: list) -> list:
     Returns:
     cases(list) = List of data frames for each test case, containing the results for every sorter 
     """
+
+    if amount_tests < 1:
+        raise ValueError("Amount of tests must be 1 or more!")
+
     # Creates a dict for storing the results
     data = {"sorter": [],
             "average time": [],
@@ -148,10 +162,10 @@ def directory_path(cases: list) -> Path:
     i = 0
     while directory.exists():
         i += 1
-        directory = results_dir / f"test {i}"
-        
+        directory = results_dir / f"test ({i})"
 
     directory.mkdir(parents=True)
+    (directory/"graphs").mkdir(parents=True)
 
     return directory
 
@@ -163,9 +177,56 @@ def save_dataframes(directory: Path, cases: dict) -> None:
     directory(Path): Where the results will be saved
     cases(dict): Dict of cases that will be saved in a excel
     """
-    with pd.ExcelWriter(f"{directory}/Results.xlsx") as writer:
-        for case, results in cases.items():
-            results.to_excel(writer, sheet_name = case, index = False)
+    workbook = Workbook()
+
+    # Remove the default sheet openpyxl creates
+    workbook.remove(workbook['Sheet'])
+
+    # Settings of the fonts and cells
+    font = Font(size = 14)
+    border = Border(left = Side(style = "thin"),
+                    right = Side(style = "thin"),
+                    top = Side(style = "thin"),
+                    bottom = Side(style = "thin"))
+    gray_cell = PatternFill(start_color = "c4c4c4", fill_type = "solid")
+    
+    # Iterates every case, creating a sheet for each
+    for case, results in cases.items():
+        sheet = workbook.create_sheet(title = case)
+
+        rows = dataframe_to_rows(results, index = False)
+
+        # Populates the sheet
+        for row_i, row in enumerate(rows, 1):
+            for col_i, value in enumerate(row, 1):
+                sheet.cell(row = row_i, column = col_i, value = value)
+
+        # Iterates every column
+        for i, column in enumerate(sheet.columns, 1):
+            # For even columns, sets their colors to gray
+            if i % 2 == 0:
+                for cell in column:
+                    cell.fill = gray_cell
+
+            # Looks for the cell with the biggest lenght
+            value_length = 0
+            for cell in column:
+                if (cell_length := len(str(cell.value))) > value_length:
+                    value_length = cell_length
+
+                # Applies the font and border to each cell
+                cell.font = font
+                cell.border = border
+
+            # Adjusts the width of the cells in the column
+            adjusted_length = (value_length + 1) * 1.4
+            column_letter = get_column_letter(column[0].column)
+            sheet.column_dimensions[column_letter].width = adjusted_length
+
+    file = directory/"Results.xlsx"
+    workbook.save(file)
+
+    workbook.close()    
 
 
 def save_graphs(directory: Path, cases: dict) -> None:
@@ -190,4 +251,4 @@ def save_graphs(directory: Path, cases: dict) -> None:
         
         plt.tight_layout()
     
-        plt.savefig(f"{directory}/{case}.png")
+        plt.savefig(f"{directory}/graphs/{case}.png")
