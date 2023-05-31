@@ -58,6 +58,12 @@ def test_timing(test_case: list, sorter, amount_tests: int) -> int:
         sorter(case)
         stopTimer = time.perf_counter()
 
+        if tests_made == 0 and amount_tests > 1:
+            if (est_time := stopTimer - startTimer) > 0.01:
+                print(f"(Estimated time in seconds: {(est_time * amount_tests):.2f})")
+            else:
+                print()
+
         test_times = np.append(test_times, (stopTimer - startTimer))
 
         tests_made += 1
@@ -128,13 +134,16 @@ def test_sorters(test_cases: dict, sorters, amount_tests: list) -> list:
             "swaps": []}
     results = {}
 
-    print("-" * 25)
+    print("-" * 50)
     for case_name, case in test_cases.items():
         print(f"{case_name}:")
         case_results = copy.deepcopy(data)
         for sorter in sorters:
 
-            print(f"Testing {sorter[0].__name__}...")
+            if amount_tests > 1:
+                print(f"Testing {sorter[0].__name__}... ", end = "")
+            else:
+                print(f"Testing {sorter[0].__name__}...")
 
             # Test the one sorter at a time in a case
             average_time, comparisons, swaps = test_sorter(case, sorter, amount_tests)
@@ -147,17 +156,17 @@ def test_sorters(test_cases: dict, sorters, amount_tests: list) -> list:
         
         # Turns the dict into a data frame
         results[case_name] = pd.DataFrame(case_results)
-        print("-" * 25)
+        print("-" * 50)
 
     return results
 
 
-def directory_path(cases: list) -> Path:
-    """Returns a file path based on the cases and tests that ran"""
-    # WIP only returns a dir called "results", if it already exist it gives it a new name like "results (#)"
+def directory_path(cases_ran: dict, amount_tests: int) -> Path:
+    """Returns the directory path with a readme for context of the text"""
+
     results_dir = Path("results")
 
-    directory = results_dir / "test"
+    directory = results_dir/"test"
 
     i = 0
     while directory.exists():
@@ -166,6 +175,10 @@ def directory_path(cases: list) -> Path:
 
     directory.mkdir(parents=True)
     (directory/"graphs").mkdir(parents=True)
+
+    with open(directory/"README.txt", "w") as file:
+        file.write(f"This this test ran {amount_tests} times to get an average time\
+                   \nIt ran the cases:\n{cases_ran}")
 
     return directory
 
@@ -236,7 +249,7 @@ def save_graphs(directory: Path, cases: dict) -> None:
     cases(dict): Dict of cases that will be saved
     """
     for case, results in cases.items():
-        fig, axs = plt.subplots(3, 1, figsize=(5, 5))
+        fig, axs = plt.subplots(3, 1, figsize = (10, 10))
         
         axs[0].bar(results["sorter"], results["average time"], color = "y")
         axs[0].set_title(case)
