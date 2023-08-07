@@ -1,4 +1,4 @@
-<h1>Sorters Tester</h1>
+<h1>Sorter Tester</h1>
 
 This is a tool for testing sorters in python, and a very simple one at that.
 
